@@ -40,27 +40,52 @@ class TaskFormViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(TaskFormUiState())
     val uiState: StateFlow<TaskFormUiState> = _uiState.asStateFlow()
 
+    fun updateDisplayName(name: String) {
+        _uiState.value = _uiState.value.copy(displayName = name, errorMessage = null)
+    }
+
     fun updateProtocol(type: BackupType) {
         _uiState.value = _uiState.value.copy(
             backupType = type,
             serverPort = type.defaultPort,
-            showPlaintextFtpWarning = type == BackupType.FTP
+            showPlaintextFtpWarning = type == BackupType.FTP,
+            errorMessage = null
         )
     }
 
-    fun updateHost(host: String) { _uiState.value = _uiState.value.copy(serverHost = host) }
+    fun updateHost(host: String) {
+        _uiState.value = _uiState.value.copy(serverHost = host, errorMessage = null)
+    }
+
     fun updatePort(portStr: String) {
         val port = portStr.toIntOrNull() ?: _uiState.value.backupType.defaultPort
-        _uiState.value = _uiState.value.copy(serverPort = port)
+        _uiState.value = _uiState.value.copy(serverPort = port, errorMessage = null)
     }
-    fun updateUsername(user: String) { _uiState.value = _uiState.value.copy(serverUsername = user) }
-    fun updatePassword(pass: String) { _uiState.value = _uiState.value.copy(passwordInput = pass) }
-    fun updateDestinationPath(path: String) { _uiState.value = _uiState.value.copy(destinationPath = path) }
+
+    fun updateUsername(user: String) {
+        _uiState.value = _uiState.value.copy(serverUsername = user, errorMessage = null)
+    }
+
+    fun updatePassword(pass: String) {
+        _uiState.value = _uiState.value.copy(passwordInput = pass, errorMessage = null)
+    }
+
+    fun updateDestinationPath(path: String) {
+        _uiState.value = _uiState.value.copy(destinationPath = path, errorMessage = null)
+    }
+
+    fun updateMediaType(mediaType: MediaType) {
+        _uiState.value = _uiState.value.copy(mediaType = mediaType, errorMessage = null)
+    }
 
     fun saveTask() {
         val state = _uiState.value
+        if (state.displayName.isBlank()) {
+            _uiState.value = state.copy(errorMessage = "Task Name is required")
+            return
+        }
         if (state.serverHost.isBlank()) {
-            _uiState.value = state.copy(errorMessage = "Server host is required")
+            _uiState.value = state.copy(errorMessage = "Server Host / IP is required")
             return
         }
 
@@ -75,14 +100,14 @@ class TaskFormViewModel @Inject constructor(
 
             val entity = BackupTaskEntity(
                 id = taskId,
-                displayName = state.displayName,
+                displayName = state.displayName.trim(),
                 sourcePath = state.sourcePath,
                 backupType = state.backupType,
-                serverHost = state.serverHost,
+                serverHost = state.serverHost.trim(),
                 serverPort = state.serverPort,
-                serverUsername = state.serverUsername,
+                serverUsername = state.serverUsername.trim(),
                 credentialKeyRef = credRef,
-                destinationPath = state.destinationPath,
+                destinationPath = state.destinationPath.trim(),
                 mediaType = state.mediaType
             )
 

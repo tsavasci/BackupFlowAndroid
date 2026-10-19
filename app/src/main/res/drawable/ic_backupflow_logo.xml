@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="128dp"
+    android:height="128dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+
+    <!-- Bottom Wave (Pink/Purple) -->
+    <path
+        android:pathData="M 16,84 C 32,68 48,100 64,84 C 80,68 96,100 112,84 L 112,98 C 96,114 80,82 64,98 C 48,114 32,82 16,98 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="16"
+                android:startY="84"
+                android:endX="112"
+                android:endY="98"
+                android:type="linear">
+                <item android:color="#FFE052D0" android:offset="0.0" />
+                <item android:color="#FF8B5CF6" android:offset="0.5" />
+                <item android:color="#FF2A72E5" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Top Wave Arrow (Cyan/Blue) -->
+    <path
+        android:pathData="M 16,56 C 32,40 48,72 64,56 C 72,48 76,36 76,20 L 64,20 L 84,4 L 104,20 L 92,20 C 92,44 84,60 64,72 C 48,88 32,56 16,72 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="16"
+                android:startY="56"
+                android:endX="104"
+                android:endY="4"
+                android:type="linear">
+                <item android:color="#FF38C3F8" android:offset="0.0" />
+                <item android:color="#FF2A72E5" android:offset="0.7" />
+                <item android:color="#FF1D4ED8" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>

@@ -13,9 +13,10 @@ import com.example.backupflow.data.local.TaskDao
 import com.example.backupflow.worker.BackupWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
@@ -33,21 +34,20 @@ class DashboardViewModel @Inject constructor(
     private val historyDao: HistoryDao
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(DashboardUiState())
-    val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
-
-    init {
-        loadData()
-    }
-
-    fun loadData() {
-        viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            val tasks = taskDao.getAllTasks()
-            val history = historyDao.getAllHistory().take(5)
-            _uiState.value = DashboardUiState(tasks = tasks, recentHistory = history, isLoading = false)
-        }
-    }
+    val uiState: StateFlow<DashboardUiState> = combine(
+        taskDao.getAllTasksFlow(),
+        historyDao.getAllHistoryFlow()
+    ) { tasks, history ->
+        DashboardUiState(
+            tasks = tasks,
+            recentHistory = history.take(5),
+            isLoading = false
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = DashboardUiState(isLoading = true)
+    )
 
     fun triggerTask(taskId: UUID) {
         val workRequest = OneTimeWorkRequestBuilder<BackupWorker>()
@@ -55,13 +55,11 @@ class DashboardViewModel @Inject constructor(
             .build()
 
         WorkManager.getInstance(context).enqueue(workRequest)
-        loadData()
     }
 
     fun deleteTask(task: BackupTaskEntity) {
         viewModelScope.launch {
             taskDao.deleteTask(task)
-            loadData()
         }
     }
 }

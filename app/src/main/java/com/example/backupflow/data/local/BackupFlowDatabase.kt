@@ -2,10 +2,14 @@ package com.example.backupflow.data.local
 
 import androidx.room.*
 import com.example.backupflow.domain.model.*
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 @Dao
 interface TaskDao {
+    @Query("SELECT * FROM backup_tasks")
+    fun getAllTasksFlow(): Flow<List<BackupTaskEntity>>
+
     @Query("SELECT * FROM backup_tasks")
     suspend fun getAllTasks(): List<BackupTaskEntity>
 
@@ -21,6 +25,9 @@ interface TaskDao {
 
 @Dao
 interface HistoryDao {
+    @Query("SELECT * FROM backup_history ORDER BY timestamp DESC")
+    fun getAllHistoryFlow(): Flow<List<BackupHistoryEntity>>
+
     @Query("SELECT * FROM backup_history ORDER BY timestamp DESC")
     suspend fun getAllHistory(): List<BackupHistoryEntity>
 
