@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BackupFlow</string>
+    <string name="system_status">Sistem Durumu</string>
+    <string name="ready_to_sync">Eşitlemeye Hazır</string>
+    <string name="saved_tasks">Kayıtlı Görevler</string>
+    <string name="new_backup_task">Yeni Yedekleme Görevi</string>
+    <string name="settings">Ayarlar</string>
+</resources>

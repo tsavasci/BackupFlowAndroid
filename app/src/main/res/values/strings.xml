@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BackupFlow</string>
+    <string name="system_status">System Status</string>
+    <string name="ready_to_sync">Ready to Sync</string>
+    <string name="saved_tasks">Saved Tasks</string>
+    <string name="new_backup_task">New Backup Task</string>
+    <string name="settings">Settings</string>
+</resources>

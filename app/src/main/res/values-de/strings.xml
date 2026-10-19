@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BackupFlow</string>
+    <string name="system_status">Systemstatus</string>
+    <string name="ready_to_sync">Bereit zur Synchronisierung</string>
+    <string name="saved_tasks">Gespeicherte Aufgaben</string>
+    <string name="new_backup_task">Neue Sicherungsaufgabe</string>
+    <string name="settings">Einstellungen</string>
+</resources>

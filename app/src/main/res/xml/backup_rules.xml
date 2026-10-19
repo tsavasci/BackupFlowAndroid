@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <exclude domain="sharedpref" path="backup_credentials.xml"/>
+    <exclude domain="sharedpref" path="tink_prefs.xml"/>
+    <exclude domain="sharedpref" path="sftp_host_keys.xml"/>
+    <exclude domain="sharedpref" path="webdav_certs.xml"/>
+    <exclude domain="database" path="backupflow_db"/>
+</full-backup-content>

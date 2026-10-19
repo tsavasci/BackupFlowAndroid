@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="sharedpref" path="backup_credentials.xml"/>
+        <exclude domain="sharedpref" path="tink_prefs.xml"/>
+        <exclude domain="sharedpref" path="sftp_host_keys.xml"/>
+        <exclude domain="sharedpref" path="webdav_certs.xml"/>
+        <exclude domain="database" path="backupflow_db"/>
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="backup_credentials.xml"/>
+        <exclude domain="sharedpref" path="tink_prefs.xml"/>
+        <exclude domain="sharedpref" path="sftp_host_keys.xml"/>
+        <exclude domain="sharedpref" path="webdav_certs.xml"/>
+        <exclude domain="database" path="backupflow_db"/>
+    </device-transfer>
+</data-extraction-rules>
